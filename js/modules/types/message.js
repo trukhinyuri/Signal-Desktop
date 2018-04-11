@@ -3,6 +3,8 @@ const { isFunction, isString, omit } = require('lodash');
 const Attachment = require('./attachment');
 const Errors = require('./errors');
 const SchemaVersion = require('./schema_version');
+const { initializeAttachmentMetadata } =
+  require('../../../ts/types/message/initializeAttachmentMetadata');
 
 
 const GROUP = 'group';
@@ -18,6 +20,11 @@ const PRIVATE = 'private';
 //   - Attachments: Sanitize Unicode order override characters.
 // Version 3
 //   - Attachments: Write attachment data to disk and store relative path to it.
+// Version 4
+//   - Attachments: Track number and kind of attachments for media gallery
+//     - `numAttachments: Number`
+//     - `numVisualMediaAttachments: Number` (for media gallery ‘Media’ view)
+//     - `numFileAttachments: Number` (for media gallery ‘Documents’ view)
 
 const INITIAL_SCHEMA_VERSION = 0;
 
@@ -26,7 +33,7 @@ const INITIAL_SCHEMA_VERSION = 0;
 // add more upgrade steps, we could design a pipeline that does this
 // incrementally, e.g. from version 0 / unknown -> 1, 1 --> 2, etc., similar to
 // how we do database migrations:
-exports.CURRENT_SCHEMA_VERSION = 3;
+exports.CURRENT_SCHEMA_VERSION = 4;
 
 
 // Public API
@@ -164,6 +171,7 @@ const toVersion3 = exports._withSchemaVersion(
   3,
   exports._mapAttachments(Attachment.migrateDataToFileSystem)
 );
+const toVersion4 = exports._withSchemaVersion(4, initializeAttachmentMetadata);
 
 // UpgradeStep
 exports.upgradeSchema = async (message, { writeNewAttachmentData } = {}) => {
@@ -171,10 +179,10 @@ exports.upgradeSchema = async (message, { writeNewAttachmentData } = {}) => {
     throw new TypeError('`context.writeNewAttachmentData` is required');
   }
 
-  return toVersion3(
+  return toVersion4(await toVersion3(
     await toVersion2(await toVersion1(await toVersion0(message))),
     { writeNewAttachmentData }
-  );
+  ));
 };
 
 exports.createAttachmentLoader = (loadAttachmentData) => {

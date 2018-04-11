@@ -161,7 +161,12 @@ window.Signal.Debug = require('./js/modules/debug');
 window.Signal.HTML = require('./ts/html');
 window.Signal.Logs = require('./js/modules/logs');
 
-window.Signal.Components = {};
+const { MediaGallery } =
+  require('./ts/components/conversation/media-gallery/MediaGallery');
+
+window.Signal.Components = {
+  MediaGallery,
+};
 
 window.Signal.Migrations = {};
 window.Signal.Migrations.deleteAttachmentData =

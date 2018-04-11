@@ -1,6 +1,4 @@
-/*
- * vim: ts=4:sw=4:expandtab
- */
+// eslint-disable
 (function () {
     'use strict';
     window.Whisper = window.Whisper || {};
@@ -99,7 +97,8 @@
                 'send-message'    : i18n('sendMessage'),
                 'disappearing-messages': i18n('disappearingMessages'),
                 'android-length-warning': i18n('androidMessageLengthWarning'),
-                timer_options     : Whisper.ExpirationTimerOptions.models
+                timer_options     : Whisper.ExpirationTimerOptions.models,
+                'view-all-media'  : i18n('viewAllMedia'),
             };
         },
         initialize: function(options) {
@@ -194,6 +193,7 @@
             'click .microphone': 'captureAudio',
             'click .disappearing-messages': 'enableDisappearingMessages',
             'click .scroll-down-button-view': 'scrollToBottom',
+            'click .view-all-media': 'viewAllMedia',
             'click button.emoji': 'toggleEmojiPanel',
             'focus .send-message': 'focusBottomBar',
             'change .file-input': 'toggleMicrophone',
@@ -543,6 +543,12 @@
             }
             this.view.scrollToBottom();
         },
+
+        // eslint-enable
+        viewAllMedia: () => {
+          console.log('View All Media');
+        },
+        // eslint-disable
 
         resetLastSeenIndicator: function(options) {
             options = options || {};

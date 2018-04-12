@@ -1,9 +1,11 @@
-import moment from 'moment';
-import qs from 'qs';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import _ from 'lodash';
+import moment from 'moment';
+import qs from 'qs';
+
+export { _ };
 
 // Helper components used in the Style Guide, exposed at 'util' in the global scope via
 //   the 'context' option in react-styleguidist.

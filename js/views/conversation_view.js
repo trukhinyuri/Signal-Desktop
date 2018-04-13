@@ -821,7 +821,7 @@
       const view = new window.Whisper.ReactWrapper({
         Component: MediaGallery,
         props,
-        onClose: this.resetPanel.bind(this),
+        onClose: () => this.resetPanel(),
       });
 
       this.listenBack(view);

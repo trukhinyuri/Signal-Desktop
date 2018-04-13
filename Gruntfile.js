@@ -191,7 +191,7 @@ module.exports = function(grunt) {
         tasks: ['jscs']
       },
       transpile: {
-        files: ['./ts/**/*.js'],
+        files: ['./ts/**/*.ts'],
         tasks: ['exec:transpile']
       }
     },

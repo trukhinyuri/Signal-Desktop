@@ -1,5 +1,8 @@
+/**
+ * @prettier
+ */
 import moment from 'moment';
-import { groupBy, sortBy } from 'lodash';
+import { compact, groupBy, sortBy } from 'lodash';
 
 import { Message } from './propTypes/Message';
 
